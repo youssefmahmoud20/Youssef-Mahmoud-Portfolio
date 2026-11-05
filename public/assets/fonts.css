@@ -1,0 +1,21 @@
+@font-face {
+  font-family: 'Lekton';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/lekton-0.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Lekton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/lekton-1.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Lekton';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/assets/lekton-2.ttf) format('truetype');
+}

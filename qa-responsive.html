@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Responsive QA</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #151515;
+        color: #ddd;
+        font: 14px monospace;
+      }
+      header {
+        padding: 10px;
+      }
+      iframe {
+        display: block;
+        border: 0;
+        background: #151515;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="label">Responsive preview</header>
+    <iframe id="preview" title="Responsive app"></iframe>
+    <script>
+      const p = new URLSearchParams(location.search);
+      const w = Number(p.get("width")) || 390;
+      const h = Number(p.get("height")) || 844;
+      const f = document.getElementById("preview");
+      f.width = w;
+      f.height = h;
+      f.src = "/developer/" + (p.get("path") || "");
+      document.getElementById("label").textContent =
+        w + " × " + h + " CSS pixels";
+    </script>
+  </body>
+</html>
