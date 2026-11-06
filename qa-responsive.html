@@ -31,7 +31,7 @@
       const f = document.getElementById("preview");
       f.width = w;
       f.height = h;
-      f.src = "/developer/" + (p.get("path") || "");
+      f.src = "/" + (p.get("path") || "");
       document.getElementById("label").textContent =
         w + " × " + h + " CSS pixels";
     </script>

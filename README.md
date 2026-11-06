@@ -1,6 +1,6 @@
 # RyanCV React
 
-React 19 + TypeScript + Vite reconstruction of the audited RyanCV developer demo. The site opens at `/developer/`; the root redirects there. React Router preserves the original portfolio, shop, cart, and checkout paths.
+React 19 + TypeScript + Vite portfolio. The site opens at `/`. Older links under `/developer/` redirect to their corresponding root paths.
 
 ## Run locally
 
@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-Open `http://127.0.0.1:5173/developer/`.
+Open `http://127.0.0.1:5173/`.
 
 ```sh
 npm run build

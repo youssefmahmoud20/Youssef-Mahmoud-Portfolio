@@ -1,5 +1,5 @@
 export const asset = (file: string) => `/assets/${file}`;
-export const base = "/developer";
+export const base = "";
 export const home = (section = "home") => `${base}/#${section}`;
 export const navItems = [
   { id: "home", label: "About", icon: "user" },

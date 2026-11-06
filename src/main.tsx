@@ -7,13 +7,14 @@ import { HomePanels } from "./sections";
 import { NotFound } from "./pages";
 import { Shop, ProductDetail, CartPage, Checkout } from "./commerce";
 import { Overlay } from "./Overlay";
-import { base, navItems, products } from "./content";
+import { navItems, products } from "./content";
 import "./styles.css";
 
 function App() {
   const location = useLocation();
-  const path = location.pathname.replace(/\/+$/, "") || "/";
-  const local = path.startsWith(base) ? path.slice(base.length) || "/" : path;
+  const legacyPath = /^\/developer(?=\/|$)/;
+  const canonicalPath = location.pathname.replace(legacyPath, "") || "/";
+  const local = canonicalPath.replace(/\/+$/, "") || "/";
   let page: React.ReactNode;
   let title = "Youssef Mahmoud — Developer";
   let isHome = false;
@@ -57,7 +58,14 @@ function App() {
     });
     if (!isHome) window.scrollTo(0, 0);
   }, [location.pathname, location.search]);
-  if (path === "/") return <Navigate to={`${base}/`} replace />;
+  if (legacyPath.test(location.pathname)) {
+    return (
+      <Navigate
+        replace
+        to={{ pathname: canonicalPath, search: location.search, hash: location.hash }}
+      />
+    );
+  }
   return (
     <>
       <SiteShell checkout={local === "/checkout"}>
