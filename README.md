@@ -41,7 +41,7 @@ The cart uses `ryancv.cart` in localStorage. Personal form data is not persisted
 
 ## Service boundaries and content differences
 
-Set `VITE_WEB3FORMS_ACCESS_KEY` at build time to enable contact submissions through Web3Forms. Create the form access key using the recipient email address. If delivery is unavailable, visitors can open their draft in their email app.
+The contact form sends through Web3Forms using the public form access key in `src/content.ts`. Set `VITE_WEB3FORMS_ACCESS_KEY` at build time to override it. If delivery is unavailable, visitors can open their draft in their email app.
 
 Product reviews and checkout remain demo flows.
 

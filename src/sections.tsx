@@ -378,7 +378,8 @@ function ContactForm() {
   const [sending, setSending] = useState(false);
   const [showEmailFallback, setShowEmailFallback] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
-  const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim();
+  const accessKey =
+    import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim() || profile.web3formsAccessKey;
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

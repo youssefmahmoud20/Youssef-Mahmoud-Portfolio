@@ -12,6 +12,7 @@ export const profile = {
   name: "Youssef Mahmoud",
   location: "Beirut, Lebanon",
   email: "youssefhijazibsns@gmail.com",
+  web3formsAccessKey: "dc6f1beb-9dd4-4131-a511-ff1cfd3b72ce",
   phone: "+961 76 988 768",
 };
 
