@@ -22,10 +22,22 @@ export const roles = [
 ];
 
 export const socials: { icon: string; label: string; url: string }[] = [
-  { icon: "instagram", label: "Instagram", url: "" },
-  { icon: "github", label: "GitHub", url: "" },
-  { icon: "linkedin", label: "LinkedIn", url: "" },
-  { icon: "whatsapp", label: "WhatsApp", url: "" },
+  {
+    icon: "instagram",
+    label: "Instagram",
+    url: "https://www.instagram.com/yousseff.mahh",
+  },
+  {
+    icon: "github",
+    label: "GitHub",
+    url: "https://github.com/youssefmahmoud20",
+  },
+  {
+    icon: "linkedin",
+    label: "LinkedIn",
+    url: "https://www.linkedin.com/in/youssef-mahmoud-7585b1232/",
+  },
+  { icon: "whatsapp", label: "WhatsApp", url: "https://wa.me/96176988768" },
 ];
 
 export const services = [
