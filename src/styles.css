@@ -2027,11 +2027,14 @@ dialog.overlay[open] {
     gap: 12px;
     width: 100%;
   }
-  .compact-identity > img {
+  .compact-identity > .portrait {
+    flex: none;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
+    border: 0;
+  }
+  .compact-identity > .portrait::before {
+    filter: blur(3px);
   }
   .compact-identity > div {
     line-height: 1.2;

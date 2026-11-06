@@ -225,7 +225,9 @@ export function SiteShell({
       <div className={`site-shell ${checkout ? "checkout-shell" : ""}`}>
         <header className="navigation">
           <div className="compact-identity">
-            <img src={asset("profile-pic.webp")} alt="" />
+            <span className="portrait">
+              <img src={asset("profile-pic.webp")} alt="" />
+            </span>
             <div>
               <Link to={home()}>{profile.name}</Link>
               <Typewriter />

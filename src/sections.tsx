@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import type { FormEvent, ReactNode } from "react";
 import { motion } from "motion/react";
 import {
@@ -452,6 +453,7 @@ function ContactForm() {
   );
 }
 export function HomePanels({ active }: { active: string }) {
+  const { hash, key } = useLocation();
   const panels = [
     ["home", About],
     ["services", Services],
@@ -460,16 +462,19 @@ export function HomePanels({ active }: { active: string }) {
     ["contact", Contact],
   ] as const;
   useEffect(() => {
-    if (matchMedia("(max-width:1120px)").matches && active !== "home")
-      requestAnimationFrame(() =>
-        document.getElementById(active)?.scrollIntoView({
-          behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
-            ? "instant"
-            : "smooth",
-          block: "start",
-        }),
-      );
-  }, [active]);
+    if (hash !== "#" + active || !matchMedia("(max-width: 1120px)").matches) {
+      return;
+    }
+    const frame = requestAnimationFrame(() => {
+      document.getElementById(active)?.scrollIntoView({
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+        block: "start",
+      });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [active, hash, key]);
   return (
     <>
       {panels.map(([id, Panel]) => (
