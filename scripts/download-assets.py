@@ -5,8 +5,7 @@ import subprocess, re, json
 root = Path(__file__).resolve().parents[1] / 'public' / 'assets'
 root.mkdir(parents=True, exist_ok=True)
 bases = {
- 'https://ryancv.bslthemes.com/developer/wp-content/uploads/sites/3/2022/07/': ['avatar.png','dev-bg-4-1200x744.jpg','dev-bg-1200x800.jpg','dev-bg-3-1200x812.jpg','brand3_w-184x62.png','brand1_w-184x62.png','brand2_w-184x62.png','brand3-184x62.png','testi1-184x184.jpg','testi2-184x184.jpg','avatar2-184x184.png','brand2_w.png','brand3_w.png','certificate.jpeg','prod2-2-300x300.jpg','prod1-2-300x300.jpg','prod2-2.jpg','prod1-2.jpg'],
- 'https://ryancv.bslthemes.com/developer/wp-content/uploads/sites/3/2020/04/': ['rlogo3.png']
+ 'https://ryancv.bslthemes.com/developer/wp-content/uploads/sites/3/2022/07/': ['dev-bg-4-1200x744.jpg','dev-bg-1200x800.jpg','dev-bg-3-1200x812.jpg','prod2-2-300x300.jpg','prod1-2-300x300.jpg','prod2-2.jpg','prod1-2.jpg']
 }
 def get(job):
  url,name=job
@@ -14,7 +13,6 @@ def get(job):
  r=subprocess.run(['curl.exe','--fail','--silent','--show-error','--location','--retry','2','--max-time','60',url,'-o',str(p)],capture_output=True,text=True)
  return {'file':name,'source':url,'ok':r.returncode==0,'bytes':p.stat().st_size if p.exists() else 0}
 jobs=[(base+name,name) for base,names in bases.items() for name in names]
-jobs += [('https://ryancv.bslthemes.com/default/wp-content/uploads/sites/29/2026/07/cv-example-file.pdf','cv.pdf')]
 with ThreadPoolExecutor(max_workers=6) as pool:
  results=list(pool.map(get,jobs))
 css=subprocess.run(['curl.exe','--fail','--silent','--location','https://fonts.googleapis.com/css2?family=Lekton:ital,wght@0,400;0,700;1,400&display=swap'],capture_output=True,text=True).stdout

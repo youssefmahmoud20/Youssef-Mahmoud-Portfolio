@@ -253,7 +253,7 @@ export function SiteShell({
         </main>
       </div>
       <footer className="site-footer">
-        © 2026 Youssef Mahmoud
+        © 2026 Youssef Mahmoud — Web Development & Digital Services. All rights reserved.
         {Object.values(cart).reduce((s, n) => s + n, 0) > 0 && (
           <Link
             className="footer-cart"
