@@ -150,13 +150,9 @@ export function Profile() {
         </div>
         <div className="profile-info">
           <Link to={home()} className="portrait-link">
-            <img
-              className="portrait"
-              src={asset("profile-pic.webp")}
-              alt={profile.name}
-              width="140"
-              height="140"
-            />
+            <span className="portrait">
+              <img src={asset("profile-pic.webp")} alt={profile.name} />
+            </span>
           </Link>
           <h1>
             <Link to={home()}>{profile.name}</Link>
