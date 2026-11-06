@@ -375,7 +375,6 @@ function ContactForm() {
   const [errors, setErrors] = useState<Record<string, string>>({}),
     [status, setStatus] = useState("");
   const submit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
     const data = new FormData(e.currentTarget),
       errs: Record<string, string> = {};
     for (const key of ["name", "email", "message"])
@@ -387,18 +386,29 @@ function ContactForm() {
     )
       errs.email = "Please enter a valid email address.";
     setErrors(errs);
-    setStatus(
-      Object.keys(errs).length
-        ? "One or more fields have an error. Please check and try again."
-        : "Your message has not been sent. Email delivery is not connected in this preview.",
-    );
-    if (Object.keys(errs).length)
-      e.currentTarget
-        .querySelector<HTMLElement>(`[name="${Object.keys(errs)[0]}"]`)
-        ?.focus();
+    const firstError = Object.keys(errs)[0];
+    if (!firstError) {
+      setStatus("");
+      return;
+    }
+    e.preventDefault();
+    setStatus("One or more fields have an error. Please check and try again.");
+    e.currentTarget
+      .querySelector<HTMLElement>(`[name="${firstError}"]`)
+      ?.focus();
   };
   return (
-    <form className="contact-form" noValidate onSubmit={submit}>
+    <form
+      className="contact-form"
+      action={`https://formsubmit.co/${profile.email}`}
+      method="post"
+      noValidate
+      onSubmit={submit}
+    >
+      <input type="hidden" name="_subject" value="New portfolio message" />
+      <div hidden>
+        <input type="text" name="_honey" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className="form-grid">
         {[
           ["name", "Full Name", "text"],

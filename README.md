@@ -41,7 +41,9 @@ The cart uses `ryancv.cart` in localStorage. Personal form data is not persisted
 
 ## Service boundaries and content differences
 
-This is a front-end reconstruction. Contact and review forms validate inputs and clearly report that submission is not connected; they do not fake delivery/publication. Checkout reproduces the original demo's unavailable-payment state and never places an order. Connect real APIs before using these flows for business.
+The contact form sends valid submissions to FormSubmit using the recipient in `src/content.ts`. Submit once from the hosted site and confirm the activation email to enable inbox delivery. FormSubmit handles spam verification and the submission confirmation page.
+
+Product reviews and checkout remain demo flows.
 
 Some service/product descriptions are abridged. Replace these content fields with the desired final copy. Map and Vimeo embeds retain their original external destinations and depend on those services being available.
 
