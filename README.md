@@ -1,6 +1,6 @@
-# RyanCV React
+# Youssef Mahmoud
 
-React 19 + TypeScript + Vite portfolio. The site opens at `/`. Older links under `/developer/` redirect to their corresponding root paths.
+React 19 + TypeScript + Vite portfolio.
 
 ## Run locally
 
@@ -36,8 +36,6 @@ At widths above 1120px the right card changes panels and scrolls independently. 
 ## Implemented behavior
 
 Portfolio type filters, independent thumbnail/title actions, image and certificate viewers, project and video overlays, manual testimonials, cover crossfade, typing animation, product sorting/tabs, quantity controls, persistent cart, remove/undo, and checkout field validation.
-
-The cart uses `ryancv.cart` in localStorage. Personal form data is not persisted. Coupon responses are deterministic because no coupons/backend were supplied.
 
 ## Service boundaries and content differences
 
