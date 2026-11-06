@@ -41,7 +41,7 @@ The cart uses `ryancv.cart` in localStorage. Personal form data is not persisted
 
 ## Service boundaries and content differences
 
-The contact form sends valid submissions to FormSubmit using the recipient in `src/content.ts`. Submit once from the hosted site and confirm the activation email to enable inbox delivery. FormSubmit handles spam verification and the submission confirmation page.
+Set `VITE_WEB3FORMS_ACCESS_KEY` at build time to enable contact submissions through Web3Forms. Create the form access key using the recipient email address. If delivery is unavailable, visitors can open their draft in their email app.
 
 Product reviews and checkout remain demo flows.
 

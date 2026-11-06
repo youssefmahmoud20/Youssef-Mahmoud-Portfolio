@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import type { FormEvent, ReactNode } from "react";
@@ -374,8 +375,16 @@ export function Contact() {
 function ContactForm() {
   const [errors, setErrors] = useState<Record<string, string>>({}),
     [status, setStatus] = useState("");
-  const submit = (e: FormEvent<HTMLFormElement>) => {
-    const data = new FormData(e.currentTarget),
+  const [sending, setSending] = useState(false);
+  const [showEmailFallback, setShowEmailFallback] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim();
+
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (sending) return;
+    const form = e.currentTarget;
+    const data = new FormData(form),
       errs: Record<string, string> = {};
     for (const key of ["name", "email", "message"])
       if (!String(data.get(key) || "").trim())
@@ -386,28 +395,70 @@ function ContactForm() {
     )
       errs.email = "Please enter a valid email address.";
     setErrors(errs);
+    setShowEmailFallback(false);
     const firstError = Object.keys(errs)[0];
-    if (!firstError) {
-      setStatus("");
+    if (firstError) {
+      setStatus(
+        "One or more fields have an error. Please check and try again.",
+      );
+      form.querySelector<HTMLElement>(`[name="${firstError}"]`)?.focus();
       return;
     }
-    e.preventDefault();
-    setStatus("One or more fields have an error. Please check and try again.");
-    e.currentTarget
-      .querySelector<HTMLElement>(`[name="${firstError}"]`)
-      ?.focus();
+    if (!accessKey) {
+      setStatus(
+        "Online delivery is temporarily unavailable. You can send your draft through your email app.",
+      );
+      setShowEmailFallback(true);
+      return;
+    }
+
+    setSending(true);
+    setStatus("");
+    data.set("access_key", accessKey);
+    data.set("subject", "New portfolio message");
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: data,
+        signal: AbortSignal.timeout(12000),
+      });
+      const result = await response.json();
+      if (!response.ok || result.success !== true) {
+        throw new Error("Submission was not accepted");
+      }
+      form.reset();
+      setStatus("Thanks. Your message was submitted.");
+    } catch {
+      setStatus(
+        "We couldn’t confirm delivery. Your draft is still here. Try again or open it in your email app.",
+      );
+      setShowEmailFallback(true);
+    } finally {
+      setSending(false);
+    }
+  };
+
+  const openEmailDraft = () => {
+    if (!formRef.current) return;
+    const data = new FormData(formRef.current);
+    const body = [
+      `Name: ${data.get("name")}`,
+      `Email: ${data.get("email")}`,
+      "",
+      String(data.get("message") || ""),
+    ].join("\r\n");
+    window.location.href = `mailto:${profile.email}?subject=New%20portfolio%20message&body=${encodeURIComponent(body)}`;
   };
   return (
-    <form
-      className="contact-form"
-      action={`https://formsubmit.co/${profile.email}`}
-      method="post"
-      noValidate
-      onSubmit={submit}
-    >
-      <input type="hidden" name="_subject" value="New portfolio message" />
+    <form className="contact-form" ref={formRef} noValidate onSubmit={submit}>
       <div hidden>
-        <input type="text" name="_honey" tabIndex={-1} autoComplete="off" />
+        <input
+          type="checkbox"
+          name="botcheck"
+          tabIndex={-1}
+          autoComplete="off"
+        />
       </div>
       <div className="form-grid">
         {[
@@ -421,6 +472,7 @@ function ContactForm() {
               type={type}
               placeholder={label}
               maxLength={400}
+              readOnly={sending}
               required
               aria-invalid={!!errors[name]}
               aria-describedby={errors[name] ? `${name}-error` : undefined}
@@ -440,6 +492,7 @@ function ContactForm() {
           placeholder="Your Message"
           rows={4}
           maxLength={2000}
+          readOnly={sending}
           required
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "message-error" : undefined}
@@ -450,14 +503,19 @@ function ContactForm() {
           </span>
         )}
       </label>
-      <button className="action" type="submit">
-        Send Message
+      <button className="action" type="submit" disabled={sending}>
+        {sending ? "Sending…" : "Send Message"}
         <Icon name="right" />
       </button>
       {status && (
         <div className="form-status" role="status">
           {status}
         </div>
+      )}
+      {showEmailFallback && (
+        <button className="action" type="button" onClick={openEmailDraft}>
+          Open draft in email app <Icon name="right" />
+        </button>
       )}
     </form>
   );
