@@ -5,16 +5,13 @@ import { motion } from "motion/react";
 import {
   asset,
   home,
+  profile,
   services,
-  clients,
   testimonials,
-  quote,
   experience,
   education,
-  coding,
-  knowledge,
-  frontend,
-  languages,
+  skillGroups,
+  selectedProjects,
   works,
   workUrl,
 } from "./content";
@@ -30,86 +27,21 @@ export function About() {
         <Heading>About Me</Heading>
         <div className="about-intro">
           <p>
-            <strong>Hello! I’m Donald Wellborn.</strong>
+            <strong>Hello, I’m {profile.name}.</strong>
             <br />
-            Back-end &amp; Frond-end developer from UK, London. I have rich
-            experience in wordpress, also I am good at Magento. I love to talk
-            with you about our unique.
+            I’m a senior full stack developer based in Beirut with 5+ years of
+            experience building production web applications, e-commerce stores,
+            APIs, and dashboards. I work across React, Node.js, PHP, and
+            WordPress, taking projects from requirements through deployment and
+            ongoing support.
           </p>
           <Facts
             items={[
-              ["Age", "45"],
-              ["Residence", "UK"],
-              ["Freelance", "Available"],
-              ["Address", "London, UK"],
+              ["Based in", profile.location],
+              ["Work", "Freelance / Remote"],
             ]}
           />
-        </div>
-      </section>
-      <section>
-        <Heading>My Services</Heading>
-        <div className="services-grid bleed">
-          {services.map((s) => (
-            <article key={s.title}>
-              <span className="service-icon">
-                <Icon name={s.icon} />
-              </span>
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-      <section>
-        <Heading>Pricing</Heading>
-        <div className="pricing-grid bleed">
-          {[
-            { name: "Popular", price: 22, icon: "queen" },
-            { name: "Pro", price: 48, icon: "rocket" },
-          ].map((p, i) => (
-            <article className="price-card" key={p.name}>
-              <Icon name={p.icon} className="price-icon" />
-              <h3>{p.name}</h3>
-              <div className="price">
-                <sup>$</sup>
-                <span>{p.price}</span>
-                <small>hour</small>
-              </div>
-              <ul>
-                {[
-                  "WorPress Development",
-                  "Installation Services",
-                  "SEO Audit",
-                  "Hosting & Domain",
-                  "WordPress Security",
-                ].map((t, j) => (
-                  <li key={t} className={j > 2 && i === 0 ? "unavailable" : ""}>
-                    {t}
-                    {j > 2 && i === 1 && <em>new</em>}
-                  </li>
-                ))}
-              </ul>
-              <Action to={home("contact")} icon="chevron">
-                Order Now
-              </Action>
-            </article>
-          ))}
-        </div>
-      </section>
-      <section>
-        <Heading>Clients</Heading>
-        <div className="clients-grid bleed">
-          {clients.map((c) => (
-            <a key={c.name} href={c.url} target="_blank" rel="noreferrer">
-              <img
-                loading="lazy"
-                src={asset(c.image)}
-                alt={c.name}
-                width="184"
-                height="62"
-              />
-            </a>
-          ))}
+          <Action to={home("services")}>Explore my services</Action>
         </div>
       </section>
       <section>
@@ -120,10 +52,10 @@ export function About() {
         <Heading>Fun Facts</Heading>
         <div className="fun-facts bleed">
           {[
-            ["disc", "100+", "Albumes Listened"],
-            ["medal", "15+", "Awards Won"],
-            ["js", "10,000+", "Lines Written"],
-            ["flag", "10+", "Countries Visited"],
+            ["code", "20+", "Production projects delivered"],
+            ["rocket", "5+ years", "Building for the web"],
+            ["shield", "Up to 40%", "WordPress performance improvement"],
+            ["js", "3", "Databases in my toolkit"],
           ].map(([icon, count, label]) => (
             <div key={label}>
               <span className="circle-icon">
@@ -141,171 +73,155 @@ export function About() {
     </>
   );
 }
-function Testimonial({ single = false }: { single?: boolean }) {
+
+function Testimonial() {
   const [slide, setSlide] = useState(0);
-  const p = single
-    ? {
-        name: "Ryan Adlard",
-        role: "Web Developer",
-        image: "avatar2-184x184.png",
-      }
-    : testimonials[slide];
+  const testimonial = testimonials[slide];
+  const move = (direction: number) =>
+    setSlide(
+      (current) =>
+        (current + direction + testimonials.length) % testimonials.length,
+    );
+
   return (
     <div className="testimonial">
-      <blockquote>
-        <Icon name="quote" />
-        {quote}
-        <span className="closing-quote">”</span>
-      </blockquote>
-      <img
-        loading="lazy"
-        src={asset(p.image)}
-        alt={p.name}
-        width="92"
-        height="92"
-      />
-      <h3>{p.name}</h3>
-      <div>{p.role}</div>
-      {!single && (
+      <div aria-live="polite">
+        <blockquote>
+          <Icon name="quote" />
+          {testimonial.quote}
+          <span className="closing-quote">”</span>
+        </blockquote>
+        <h3>{testimonial.topic}</h3>
+        <p className="muted">Illustrative example</p>
+      </div>
+      <div className="carousel-controls" aria-label="Testimonial navigation">
+        <button
+          type="button"
+          aria-label="Previous testimonial"
+          onClick={() => move(-1)}
+        >
+          <Icon name="left" />
+        </button>
         <div className="carousel-dots">
-          {testimonials.map((t, i) => (
+          {testimonials.map((item, index) => (
             <button
-              key={t.name}
-              aria-label={`Go to slide ${i + 1}`}
-              aria-pressed={slide === i}
-              onClick={() => setSlide(i)}
-              className={slide === i ? "active" : ""}
+              type="button"
+              key={item.topic}
+              aria-label={`Go to testimonial ${index + 1}`}
+              aria-pressed={slide === index}
+              onClick={() => setSlide(index)}
+              className={slide === index ? "active" : ""}
             />
           ))}
         </div>
-      )}
+        <button
+          type="button"
+          aria-label="Next testimonial"
+          onClick={() => move(1)}
+        >
+          <Icon name="right" />
+        </button>
+      </div>
     </div>
   );
 }
+
+export function Services() {
+  return (
+    <section>
+      <Heading>Services</Heading>
+      <div className="services-grid bleed">
+        {services.map((service) => (
+          <article key={service.title}>
+            <span className="service-icon">
+              <Icon name={service.icon} />
+            </span>
+            <h3>{service.title}</h3>
+            <p>{service.text}</p>
+            <ul className="knowledge-list service-details">
+              {service.details.map((detail) => (
+                <li key={detail}>
+                  <Icon name="check" />
+                  {detail}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+      <Action to={home("contact")}>Discuss your project</Action>
+    </section>
+  );
+}
+
+type TimelineEntry = {
+  date: string;
+  title: string;
+  place: string;
+  text?: string;
+  current?: boolean;
+};
+
+function Timeline({
+  title,
+  icon,
+  entries,
+}: {
+  title: string;
+  icon: string;
+  entries: TimelineEntry[];
+}) {
+  return (
+    <div className="timeline-column">
+      <IconTitle icon={icon}>{title}</IconTitle>
+      {entries.map((entry) => (
+        <article
+          className={entry.current ? "timeline-item current" : "timeline-item"}
+          key={entry.title}
+        >
+          <span className="date">{entry.date}</span>
+          <h3>{entry.title}</h3>
+          <div className="muted">{entry.place}</div>
+          {entry.text && <p>{entry.text}</p>}
+        </article>
+      ))}
+    </div>
+  );
+}
+
 export function Resume() {
-  const { setViewer } = useApp();
   return (
     <>
       <section>
         <Heading>Resume</Heading>
         <div className="timeline-grid bleed">
-          {[
-            { title: "Experience", icon: "briefcase", rows: experience },
-            { title: "Education", icon: "graduation", rows: education },
-          ].map((group) => (
-            <div className="timeline-column" key={group.title}>
+          <Timeline title="Experience" icon="briefcase" entries={experience} />
+          <div>
+            <Timeline title="Education" icon="graduation" entries={education} />
+            <div className="timeline-column">
+              <IconTitle icon="medal">Certification</IconTitle>
+              <h3>WordPress Mastery Certification</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <Heading>Skills & Languages</Heading>
+        <div className="skill-grid bleed">
+          {skillGroups.map((group) => (
+            <div className="skill-group" key={group.title}>
               <IconTitle icon={group.icon}>{group.title}</IconTitle>
-              {group.rows.map((row) => (
-                <article
-                  className={
-                    "timeline-item " +
-                    ("current" in row && row.current ? "current" : "")
-                  }
-                  key={row.date}
-                >
-                  <span className="date">{row.date}</span>
-                  {"logo" in row && (
-                    <img
-                      className="company-logo"
-                      src={asset(String(row.logo))}
-                      alt=""
-                    />
-                  )}
-                  <h3>{row.title}</h3>
-                  <div className="muted">{row.place}</div>
-                  <p>{row.text}</p>
-                  {row.action && (
-                    <button
-                      className="action small"
-                      onClick={() =>
-                        setViewer({
-                          kind: "images",
-                          images: ["certificate.jpeg"],
-                          title: row.action!,
-                        })
-                      }
-                    >
-                      {row.action}
-                      <Icon name="right" />
-                    </button>
-                  )}
-                </article>
-              ))}
+              <ul className="knowledge-list">
+                {group.items.map((item) => (
+                  <li key={item}>
+                    <Icon name="check" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>
-      </section>
-      <section>
-        <Heading>Skills</Heading>
-        <div className="skill-grid bleed">
-          <div className="skill-group">
-            <IconTitle icon="code">Coding</IconTitle>
-            <div className="ring-grid">
-              {coding.map((s) => (
-                <div key={s.name}>
-                  <div
-                    className="skill-ring"
-                    style={{
-                      background: `conic-gradient(var(--accent) ${s.value}%, var(--track) 0)`,
-                    }}
-                  >
-                    <span>
-                      {s.value}
-                      <small>%</small>
-                    </span>
-                  </div>
-                  <div>{s.name}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="skill-group">
-            <IconTitle icon="knowledge">Knowledge</IconTitle>
-            <ul className="knowledge-list">
-              {knowledge.map((s) => (
-                <li key={s}>
-                  <Icon name="check" />
-                  {s}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="skill-group">
-            <IconTitle icon="html">Front-end</IconTitle>
-            {frontend.map((s) => (
-              <div className="meter" key={s.name}>
-                <span>{s.name}</span>
-                <div
-                  className="meter-track"
-                  role="meter"
-                  aria-label={s.name}
-                  aria-valuenow={s.value}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                >
-                  <i style={{ width: s.value + "%" }} />
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="skill-group">
-            <IconTitle icon="language">Languages</IconTitle>
-            {languages.map((s) => (
-              <div className="meter" key={s.name}>
-                <span>{s.name}</span>
-                <div className="dot-meter" aria-label={`${s.name} ${s.value}%`}>
-                  {Array.from({ length: 10 }, (_, i) => (
-                    <i className={i < s.value / 10 ? "filled" : ""} key={i} />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      <section>
-        <Heading>Quote</Heading>
-        <Testimonial single />
       </section>
     </>
   );
@@ -375,28 +291,42 @@ export function Masonry({ children }: { children: ReactNode[] }) {
 export function Works() {
   const [filter, setFilter] = useState("All");
   return (
-    <section>
-      <Heading
-        aside={
-          <Filters
-            options={["All", "Video", "Link", "Image", "Gallery", "Content"]}
-            value={filter}
-            onChange={setFilter}
-          />
-        }
-      >
-        Works
-      </Heading>
-      <div className="grid-content">
-        <Masonry>
-          {works
-            .filter((w) => filter === "All" || w.type === filter)
-            .map((w) => (
-              <WorkCard key={w.slug} work={w} />
-            ))}
-        </Masonry>
-      </div>
-    </section>
+    <>
+      <section>
+        <Heading>Selected Projects</Heading>
+        <div className="services-grid bleed">
+          {selectedProjects.map((project) => (
+            <article key={project.title}>
+              <h3>{project.title}</h3>
+              <span className="work-type">{project.category}</span>
+              <p>{project.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section>
+        <Heading
+          aside={
+            <Filters
+              options={["All", "Video", "Link", "Image", "Gallery", "Content"]}
+              value={filter}
+              onChange={setFilter}
+            />
+          }
+        >
+          Demo Gallery
+        </Heading>
+        <div className="grid-content">
+          <Masonry>
+            {works
+              .filter((w) => filter === "All" || w.type === filter)
+              .map((w) => (
+                <WorkCard key={w.slug} work={w} />
+              ))}
+          </Masonry>
+        </div>
+      </section>
+    </>
   );
 }
 function WorkCard({ work: w }: { work: Work }) {
@@ -475,17 +405,17 @@ export function Contact() {
         <Heading>Get in Touch</Heading>
         <div className="map-wrap">
           <iframe
-            title="London Eye, London map"
-            src="https://maps.google.com/maps?q=London%20Eye%2C%20London%2C%20United%20Kingdom&t=m&z=16&output=embed&iwloc=near"
+            title="Beirut, Lebanon map"
+            src="https://maps.google.com/maps?q=Beirut%2C%20Lebanon&t=m&z=16&output=embed&iwloc=near"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
         </div>
         <Facts
           items={[
-            ["Address", "London, UK"],
-            ["Email", "wellborn@example.com"],
-            ["Phone", "+123 654 78900"],
+            ["Location", profile.location],
+            ["Email", profile.email],
+            ["Phone", profile.phone],
             ["Freelance", "Available"],
           ]}
         />
@@ -581,6 +511,7 @@ function ContactForm() {
 export function HomePanels({ active }: { active: string }) {
   const panels = [
     ["home", About],
+    ["services", Services],
     ["resume", Resume],
     ["works", Works],
     ["contact", Contact],

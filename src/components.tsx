@@ -6,6 +6,7 @@ import {
   base,
   home,
   roles,
+  profile,
   socials,
   navItems,
 } from "./content";
@@ -135,7 +136,7 @@ export function Profile() {
     return () => clearInterval(id);
   }, []);
   return (
-    <section className="profile-card" aria-label="Tony Ryan profile">
+    <section className="profile-card" aria-label={profile.name + " profile"}>
       <div className="profile-main">
         <div className="cover">
           {covers.map((src, i) => (
@@ -151,33 +152,43 @@ export function Profile() {
           <Link to={home()} className="portrait-link">
             <img
               className="portrait"
-              src={asset("avatar.png")}
-              alt="Tony Ryan"
+              src={asset("profile-pic.webp")}
+              alt={profile.name}
               width="140"
               height="140"
             />
           </Link>
           <h1>
-            <Link to={home()}>Tony Ryan</Link>
+            <Link to={home()}>{profile.name}</Link>
           </h1>
           <Typewriter />
           <div className="socials">
-            {socials.map((s) => (
-              <a
-                href={s.url}
-                key={s.label}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={s.label}
-              >
-                <Icon name={s.icon} />
-              </a>
-            ))}
+            {socials.map((social) =>
+              social.url ? (
+                <a
+                  key={social.label}
+                  href={social.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={social.label}
+                >
+                  <Icon name={social.icon} />
+                </a>
+              ) : (
+                <span
+                  key={social.label}
+                  role="img"
+                  aria-label={social.label + " profile link pending"}
+                >
+                  <Icon name={social.icon} />
+                </span>
+              ),
+            )}
           </div>
         </div>
       </div>
       <div className="profile-actions">
-        <a href={asset("cv.pdf")} download>
+        <a href={asset("cv.pdf")} download="CV - Youssef Mahmoud.pdf">
           Download CV <Icon name="download" />
         </a>
         <Link to={home("contact")}>
@@ -198,10 +209,12 @@ export function SiteShell({
 }) {
   const { cart } = useApp();
   const location = useLocation();
-  const active = location.pathname === base || location.pathname === base + "/"
-    ? navItems.find((item) => "#" + item.id === location.hash)?.id ?? "home"
-    : location.pathname.includes("/portfolio-archive/") ? "works"
-    : undefined;
+  const active =
+    location.pathname === base || location.pathname === base + "/"
+      ? (navItems.find((item) => "#" + item.id === location.hash)?.id ?? "home")
+      : location.pathname.includes("/portfolio-archive/")
+        ? "works"
+        : undefined;
   return (
     <>
       <a className="skip-link" href="#main-content">
@@ -220,9 +233,9 @@ export function SiteShell({
       >
         <header className="navigation">
           <div className="compact-identity">
-            <img src={asset("avatar.png")} alt="" />
+            <img src={asset("profile-pic.webp")} alt="" />
             <div>
-              <Link to={home()}>Tony Ryan</Link>
+              <Link to={home()}>{profile.name}</Link>
               <Typewriter />
             </div>
           </div>

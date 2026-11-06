@@ -15,7 +15,7 @@ function App() {
   const path = location.pathname.replace(/\/+$/, "") || "/";
   const local = path.startsWith(base) ? path.slice(base.length) || "/" : path;
   let page: React.ReactNode;
-  let title = "RyanCV — Developer";
+  let title = "Youssef Mahmoud — Developer";
   let detail = false;
   let isHome = false;
   const work = works.find((w) => local === `/portfolio-archive/${w.slug}`),
@@ -34,29 +34,29 @@ function App() {
     );
   } else if (work) {
     page = <ProjectDetail work={work} />;
-    title = work.title + " — RyanCV";
+    title = work.title + " — Youssef Mahmoud";
     detail = true;
   } else if (product) {
     page = <ProductDetail product={product} />;
-    title = product.name + " — RyanCV";
+    title = product.name + " — Youssef Mahmoud";
   } else if (local === "/shop") {
     page = <Shop />;
-    title = "Shop — RyanCV";
+    title = "Shop — Youssef Mahmoud";
   } else if (
     local.startsWith("/product-category/") &&
     ["branding", "web-development"].includes(local.split("/")[2])
   ) {
     page = <Shop category={local.split("/")[2]} />;
-    title = "Products — RyanCV";
+    title = "Products — Youssef Mahmoud";
   } else if (local === "/cart") {
     page = <CartPage />;
-    title = "Cart — RyanCV";
+    title = "Cart — Youssef Mahmoud";
   } else if (local === "/checkout") {
     page = <Checkout />;
-    title = "Checkout — RyanCV";
+    title = "Checkout — Youssef Mahmoud";
   } else {
     page = <NotFound />;
-    title = "Page not found — RyanCV";
+    title = "Page not found — Youssef Mahmoud";
   }
   useEffect(() => {
     document.title = title;

@@ -3,153 +3,218 @@ export const base = "/developer";
 export const home = (section = "home") => `${base}/#${section}`;
 export const navItems = [
   { id: "home", label: "About", icon: "user" },
+  { id: "services", label: "Services", icon: "code" },
   { id: "resume", label: "Resume", icon: "list" },
   { id: "works", label: "Works", icon: "eye" },
   { id: "contact", label: "Contact", icon: "plane" },
 ];
+export const profile = {
+  name: "Youssef Mahmoud",
+  location: "Beirut, Lebanon",
+  email: "youssefhijazibsns@gmail.com",
+  phone: "+961 76 988 768",
+};
+
 export const roles = [
-  "Back-end Developer",
-  "Front-end Developer",
+  "Full Stack Developer",
+  "WordPress Developer",
   "Freelancer",
-  "Programmer",
 ];
-export const socials = [
-  { icon: "instagram", label: "Instagram", url: "https://dribbble.com/" },
-  { icon: "twitter", label: "Twitter", url: "https://twitter.com/" },
-  { icon: "github", label: "GitHub", url: "https://github.com/" },
-  {
-    icon: "stackoverflow",
-    label: "Stack Overflow",
-    url: "https://stackoverflow.com/",
-  },
-  { icon: "whatsapp", label: "WhatsApp", url: "https://www.whatsapp.com/" },
+
+export const socials: { icon: string; label: string; url: string }[] = [
+  { icon: "instagram", label: "Instagram", url: "" },
+  { icon: "github", label: "GitHub", url: "" },
+  { icon: "linkedin", label: "LinkedIn", url: "" },
+  { icon: "whatsapp", label: "WhatsApp", url: "" },
 ];
+
 export const services = [
   {
-    icon: "html",
-    title: "Front-end",
-    text: "Modern and mobile-ready website that will help you reach all of your marketing.",
-  },
-  {
-    icon: "php",
-    title: "Back-End",
-    text: "UI/UX focus on the user, frontend focus on the settings of the user, and backend focus on the data.",
+    icon: "code",
+    title: "Full Stack Development",
+    text: "Build responsive web applications, dashboards, and internal tools from requirements through deployment.",
+    details: [
+      "React and Next.js interfaces",
+      "Node.js, Express, and PHP backends",
+      "MySQL, PostgreSQL, and MongoDB data models",
+    ],
   },
   {
     icon: "wordpress",
     title: "WordPress Development",
-    text: "WordPress development services improve business websites.",
+    text: "Build and extend WordPress sites around your content and the way your team works.",
+    details: [
+      "Custom themes, plugins, and Gutenberg blocks",
+      "ACF, custom post types, and tailored admin pages",
+      "Multilingual, LMS, and affiliate workflows",
+    ],
+  },
+  {
+    icon: "cart",
+    title: "E-commerce & WooCommerce",
+    text: "Create online stores with clear product navigation and checkout flows that fit your business.",
+    details: [
+      "Catalog setup, categories, and filtering",
+      "Payment gateway and third-party integrations",
+      "Custom WooCommerce features and workflows",
+    ],
+  },
+  {
+    icon: "link",
+    title: "APIs & Automation",
+    text: "Connect your website and business tools so teams spend less time entering the same data twice.",
+    details: [
+      "REST API development and integration",
+      "Authentication and data synchronization",
+      "Workflow automation and administrative tools",
+    ],
   },
   {
     icon: "shield",
-    title: "WordPress Security",
-    text: "Security consultants can check the code and scan for vulnerabilities.",
+    title: "Performance & Maintenance",
+    text: "Improve page speed, resolve production issues, and make existing sites easier to maintain.",
+    details: [
+      "Caching, asset and database optimization",
+      "Technical SEO and security improvements",
+      "Hosting, DNS, Cloudflare, and migrations",
+    ],
+  },
+  {
+    icon: "rocket",
+    title: "Deployment & Support",
+    text: "Take an application from a working build to production and keep it running after launch.",
+    details: [
+      "Docker and CI/CD workflows",
+      "AWS, CloudFront, and Microsoft Azure",
+      "Release troubleshooting and post-launch support",
+    ],
   },
 ];
-export const clients = [
-  {
-    name: "envato",
-    image: "brand3_w-184x62.png",
-    url: "https://www.envato.com/",
-  },
-  {
-    name: "freelancer",
-    image: "brand1_w-184x62.png",
-    url: "https://www.freelancer.com/",
-  },
-  {
-    name: "upwork",
-    image: "brand2_w-184x62.png",
-    url: "https://www.upwork.com/",
-  },
-  {
-    name: "Google",
-    image: "brand3-184x62.png",
-    url: "https://www.google.com/",
-  },
-];
-export const quote =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+
 export const testimonials = [
-  { name: "Helen Floyd", role: "Art Director", image: "testi1-184x184.jpg" },
-  { name: "Robert Chase", role: "CEO", image: "testi2-184x184.jpg" },
-  { name: "John Doe", role: "Art Director", image: "avatar2-184x184.png" },
+  {
+    topic: "Store launch",
+    quote:
+      "The product filters made our catalog easier to browse, and the checkout flow was simple to test before launch.",
+  },
+  {
+    topic: "WordPress maintenance",
+    quote:
+      "We could update the site ourselves after the handover, and the mobile pages felt quicker to load.",
+  },
+  {
+    topic: "Business dashboard",
+    quote:
+      "Putting the reports in one dashboard saved us from switching between spreadsheets to answer basic questions.",
+  },
 ];
+
 export const experience = [
   {
-    date: "2018 - Present",
-    title: "Team Leader",
-    place: "Facebook Inc.",
-    text: "Collaborate with creative and development teams on the execution of ideas.",
-    logo: "rlogo3.png",
-    action: "Recommendation",
+    date: "2021 – Present",
+    title: "Freelance Full Stack Developer",
+    place: "Lebanon / Remote",
+    text: "Delivered 20+ production applications, stores, dashboards, and business solutions. Built responsive interfaces, backend services, and database workflows. Integrated payments, authentication, and third-party APIs, and managed deployments, migrations, performance, security, and post-launch support.",
     current: true,
   },
   {
-    date: "2016 - 2018",
-    title: "Web Developer",
-    place: "Upwork Inc.",
-    text: "Monitored technical aspects of the front-end delivery for projects.",
-    logo: "brand2_w.png",
-    action: "Recommendation",
+    date: "Jan 2026 – Jul 2026",
+    title: "WordPress & Full Stack MERN Developer",
+    place: "Najahak.io · Beirut, Lebanon",
+    text: "Built production MERN applications, APIs, admin tools, and responsive interfaces. Developed custom WordPress plugins and WooCommerce functionality for multilingual, affiliate, LMS, and e-commerce workflows. Supported deployments, SEO, and production troubleshooting.",
   },
   {
-    date: "2014 - 2016",
-    title: "Software Developer",
-    place: "Envato Inc.",
-    text: "Optimize your website and apps performance using latest technology.",
-    logo: "brand3_w.png",
+    date: "2022 – 2025",
+    title: "WordPress Developer",
+    place: "Inspiral Solutions · Lebanon",
+    text: "Improved WordPress website performance by up to 40% through caching, asset optimization, and code refinement. Built custom themes, plugins, and responsive templates, resolved hosting issues, and completed site migrations.",
   },
 ];
+
 export const education = [
   {
-    date: "2010 - 2014",
-    title: "Stamford University",
-    place: "United States",
-    text: "Stanford University, a private research university in Stanford, California.",
-    action: "Certificate",
+    date: "2022 – 2025",
+    title: "Bachelor of Science in Computer Science",
+    place: "Lebanese International University (LIU)",
+  },
+];
+
+export const skillGroups = [
+  {
+    icon: "html",
+    title: "Front End",
+    items: [
+      "JavaScript (ES6+), TypeScript, HTML5, CSS3",
+      "React, Next.js, AJAX, jQuery",
+      "Responsive web development",
+    ],
   },
   {
-    date: "2009 - 2010",
-    title: "Programming Course",
-    place: "London",
-    text: "Coursework — Git, WordPress, Javascript, iOS, Android.",
-    action: "Certificate",
+    icon: "code",
+    title: "Back End & Databases",
+    items: [
+      "Node.js, Express.js, PHP",
+      "REST APIs, integrations, SQL",
+      "MySQL, PostgreSQL, MongoDB",
+    ],
   },
   {
-    date: "1999 - 2009",
-    title: "London School",
-    place: "London",
-    text: "Converting Photoshop layouts to web pages using HTML, CSS, and JavaScript.",
+    icon: "wordpress",
+    title: "WordPress & E-commerce",
+    items: [
+      "WordPress, WooCommerce, WP-CLI",
+      "Custom themes, plugins, and Gutenberg",
+      "ACF, custom post types, and custom admin pages",
+    ],
+  },
+  {
+    icon: "rocket",
+    title: "Cloud & Development",
+    items: [
+      "AWS, CloudFront, Azure, Docker, CI/CD",
+      "Git, GitHub, deployment and debugging",
+      "Performance optimization and security",
+      "Codex, Claude Code, Cursor",
+    ],
+  },
+  {
+    icon: "language",
+    title: "Languages",
+    items: ["Arabic — Native", "English — Professional working proficiency"],
   },
 ];
-export const coding = [
-  { name: "WordPress", value: 90 },
-  { name: "PHP / MYSQL", value: 75 },
-  { name: "Angular / JavaScript", value: 85 },
-  { name: "HTML / CSS", value: 95 },
-];
-export const knowledge = [
-  "Website hosting",
-  "WordPress Development",
-  "Hosting Installation",
-  "SEO Optimize",
-  "Responsive and mobile-ready",
-  "Advertising services",
-  "HTML, CSS, jQuery",
-  "Search engine marketing",
-];
-export const frontend = [
-  { name: "Java", value: 90 },
-  { name: "Angular", value: 65 },
-  { name: "jQuery", value: 75 },
-  { name: "HTML", value: 85 },
-];
-export const languages = [
-  { name: "English", value: 90 },
-  { name: "German", value: 60 },
-  { name: "Italian", value: 30 },
-  { name: "French", value: 70 },
+
+export const selectedProjects = [
+  {
+    title: "Smart Garden",
+    category: "WooCommerce",
+    text: "A store for hydroponic and smart gardening products, with clear shopping flows and a focus on speed.",
+  },
+  {
+    title: "Claline Pharmacy",
+    category: "E-commerce",
+    text: "An online pharmacy and beauty store with structured categories and product filtering.",
+  },
+  {
+    title: "Calia Group",
+    category: "E-commerce",
+    text: "A clothing website with dynamic product showcases and clear store navigation.",
+  },
+  {
+    title: "Fun Square Leb",
+    category: "Booking website",
+    text: "An entertainment venue website with an events showcase and integrated booking and contact flows.",
+  },
+  {
+    title: "Restaurant Le Figuier & Baladi Restaurant",
+    category: "Restaurant websites",
+    text: "Restaurant websites with menus, galleries, reservations, ordering, and location information.",
+  },
+  {
+    title: "LiftFit Gym",
+    category: "Framer",
+    text: "A mobile-first landing page with smooth animations and reusable components.",
+  },
 ];
 
 export type Work = {

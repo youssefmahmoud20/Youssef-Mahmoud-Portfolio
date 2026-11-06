@@ -334,6 +334,8 @@ small {
   z-index: -1;
 }
 .portrait {
+  width: 100%;
+  height: 100%;
   border: 3px solid var(--surface);
   border-radius: 50%;
   object-fit: cover;
@@ -2034,7 +2036,7 @@ dialog.overlay[open] {
     overscroll-behavior-x: contain;
   }
   .navigation nav a {
-    flex: 1 0 25%;
+    flex: 1 0 20%;
     height: 65px;
     gap: 7px;
     min-width: 64px;
@@ -2391,7 +2393,8 @@ dialog.overlay[open] {
 .socials {
   gap: 16px;
 }
-.socials a {
+.socials a,
+.socials > span {
   font-size: 16px;
 }
 .facts-list {
@@ -2476,4 +2479,27 @@ dialog.overlay[open] {
   .pointer-halo {
     display: none;
   }
+}
+
+.service-details {
+  margin-top: 1rem;
+}
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.carousel-controls .carousel-dots {
+  margin: 0;
+}
+
+.carousel-controls > button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--track);
+  border-radius: 50%;
+  color: var(--accent);
 }
