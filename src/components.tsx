@@ -201,7 +201,6 @@ export function SiteShell({
   const active = location.pathname === base || location.pathname === base + "/"
     ? navItems.find((item) => "#" + item.id === location.hash)?.id ?? "home"
     : location.pathname.includes("/portfolio-archive/") ? "works"
-    : /\/(product|product-category|shop|cart|checkout)(\/|$)/.test(location.pathname) ? "products"
     : undefined;
   return (
     <>

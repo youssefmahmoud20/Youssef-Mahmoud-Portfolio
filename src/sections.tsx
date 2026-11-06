@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import {
   asset,
-  base,
   home,
   services,
   clients,
@@ -18,13 +17,11 @@ import {
   languages,
   works,
   workUrl,
-  products,
 } from "./content";
 import type { Work } from "./content";
 import { Heading, Facts, IconTitle, Action } from "./components";
 import { Icon } from "./icons";
 import { useApp } from "./state";
-import { ProductGrid } from "./commerce";
 
 export function About() {
   return (
@@ -581,27 +578,12 @@ function ContactForm() {
     </form>
   );
 }
-export function Products() {
-  return (
-    <section>
-      <Heading>Products</Heading>
-      <div className="grid-content">
-        <ProductGrid items={products} />
-        <div className="center">
-          <Action to={`${base}/shop/`}>All Products</Action>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export function HomePanels({ active }: { active: string }) {
   const panels = [
     ["home", About],
     ["resume", Resume],
     ["works", Works],
     ["contact", Contact],
-    ["products", Products],
   ] as const;
   useEffect(() => {
     if (matchMedia("(max-width:1120px)").matches && active !== "home")

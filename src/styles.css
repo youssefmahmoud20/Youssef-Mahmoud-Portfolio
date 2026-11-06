@@ -2034,7 +2034,7 @@ dialog.overlay[open] {
     overscroll-behavior-x: contain;
   }
   .navigation nav a {
-    flex: 0 0 20%;
+    flex: 1 0 25%;
     height: 65px;
     gap: 7px;
     min-width: 64px;

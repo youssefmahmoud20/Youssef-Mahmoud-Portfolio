@@ -6,7 +6,6 @@ export const navItems = [
   { id: "resume", label: "Resume", icon: "list" },
   { id: "works", label: "Works", icon: "eye" },
   { id: "contact", label: "Contact", icon: "plane" },
-  { id: "products", label: "Products", icon: "desktop" },
 ];
 export const roles = [
   "Back-end Developer",
