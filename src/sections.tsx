@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { FormEvent, ReactNode } from "react";
-import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import {
   asset,
@@ -11,14 +10,12 @@ import {
   experience,
   education,
   skillGroups,
-  selectedProjects,
   works,
-  workUrl,
+  workCategories,
 } from "./content";
 import type { Work } from "./content";
 import { Heading, Facts, IconTitle, Action } from "./components";
 import { Icon } from "./icons";
-import { useApp } from "./state";
 
 export function About() {
   return (
@@ -291,113 +288,59 @@ export function Masonry({ children }: { children: ReactNode[] }) {
 export function Works() {
   const [filter, setFilter] = useState("All");
   return (
-    <>
-      <section>
-        <Heading>Selected Projects</Heading>
-        <div className="services-grid bleed">
-          {selectedProjects.map((project) => (
-            <article key={project.title}>
-              <h3>{project.title}</h3>
-              <span className="work-type">{project.category}</span>
-              <p>{project.text}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-      <section>
-        <Heading
-          aside={
-            <Filters
-              options={["All", "Video", "Link", "Image", "Gallery", "Content"]}
-              value={filter}
-              onChange={setFilter}
-            />
-          }
-        >
-          Demo Gallery
-        </Heading>
-        <div className="grid-content">
-          <Masonry>
-            {works
-              .filter((w) => filter === "All" || w.type === filter)
-              .map((w) => (
-                <WorkCard key={w.slug} work={w} />
-              ))}
-          </Masonry>
-        </div>
-      </section>
-    </>
+    <section>
+      <Heading
+        aside={
+          <Filters
+            options={["All", ...workCategories]}
+            value={filter}
+            onChange={setFilter}
+          />
+        }
+      >
+        Works
+      </Heading>
+      <div className="grid-content">
+        <Masonry>
+          {works
+            .filter((work) => filter === "All" || work.category === filter)
+            .map((work) => (
+              <WorkCard key={work.url} work={work} />
+            ))}
+        </Masonry>
+      </div>
+    </section>
   );
 }
-function WorkCard({ work: w }: { work: Work }) {
-  const { setViewer } = useApp();
-  const action = () => {
-    if (w.type === "Video") setViewer({ kind: "video", title: w.title });
-    else if (w.type === "Content") setViewer({ kind: "project", work: w });
-    else
-      setViewer({
-        kind: "images",
-        title: w.title,
-        images:
-          w.type === "Gallery"
-            ? [w.image, ...(w.thumbnailGallery || w.gallery)]
-            : [w.image],
-      });
-  };
-  const image = (
-    <>
-      <img
-        src={asset(w.image)}
-        alt={w.title}
-        width={w.width}
-        height={w.height}
-        loading="lazy"
-      />
-      <span className="image-overlay">
-        <Icon
-          name={
-            w.type === "Video"
-              ? "play"
-              : w.type === "Gallery"
-                ? "gallery"
-                : w.type === "Link"
-                  ? "link"
-                  : w.type === "Content"
-                    ? "content"
-                    : "plus"
-          }
-        />
-      </span>
-    </>
-  );
+
+function WorkCard({ work }: { work: Work }) {
   return (
     <article className="work-card">
-      {w.type === "Link" ? (
-        <a
-          className="image-link"
-          href="https://bslthemes.com/"
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`Visit ${w.title}`}
-        >
-          {image}
-        </a>
-      ) : (
-        <button
-          className="image-link"
-          onClick={action}
-          aria-label={`Open ${w.title} ${w.type.toLowerCase()}`}
-        >
-          {image}
-        </button>
-      )}
-      <h3>
-        <Link to={workUrl(w)}>{w.title}</Link>
-      </h3>
-      <span className="work-type">{w.type}</span>
+      <a
+        href={work.url}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={work.title + " (opens in a new tab)"}
+      >
+        <span className="image-link">
+          <img
+            src={asset(work.image)}
+            alt=""
+            width={work.width}
+            height={work.height}
+            loading="lazy"
+          />
+          <span className="image-overlay">
+            <Icon name="link" />
+          </span>
+        </span>
+        <h3>{work.title}</h3>
+      </a>
+      <span className="work-type">{work.category}</span>
     </article>
   );
 }
+
 export function Contact() {
   return (
     <>

@@ -196,11 +196,9 @@ export function Profile() {
 }
 export function SiteShell({
   children,
-  detail = false,
   checkout = false,
 }: {
   children: ReactNode;
-  detail?: boolean;
   checkout?: boolean;
 }) {
   const { cart } = useApp();
@@ -208,9 +206,7 @@ export function SiteShell({
   const active =
     location.pathname === base || location.pathname === base + "/"
       ? (navItems.find((item) => "#" + item.id === location.hash)?.id ?? "home")
-      : location.pathname.includes("/portfolio-archive/")
-        ? "works"
-        : undefined;
+      : undefined;
   return (
     <>
       <a className="skip-link" href="#main-content">
@@ -224,9 +220,7 @@ export function SiteShell({
           />
         ))}
       </div>
-      <div
-        className={`site-shell ${detail ? "detail-shell" : ""} ${checkout ? "checkout-shell" : ""}`}
-      >
+      <div className={`site-shell ${checkout ? "checkout-shell" : ""}`}>
         <header className="navigation">
           <div className="compact-identity">
             <img src={asset("profile-pic.webp")} alt="" />
@@ -284,36 +278,4 @@ function PointerHalo() {
     return () => window.removeEventListener("pointermove", move);
   }, []);
   return <div className="pointer-halo" ref={ref} aria-hidden="true" />;
-}
-export function ShareLinks({ title, path }: { title: string; path?: string }) {
-  const url = encodeURIComponent(
-      window.location.origin + (path || window.location.pathname),
-    ),
-    t = encodeURIComponent(title);
-  const urls = [
-    ["facebook", `https://www.facebook.com/sharer/sharer.php?u=${url}`],
-    ["twitter", `https://twitter.com/intent/tweet?text=%20${url}`],
-    [
-      "linkedin",
-      `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${t}`,
-    ],
-    ["reddit", `https://www.reddit.com/submit?url=${url}&title=${t}`],
-    ["pinterest", `https://pinterest.com/pin/create/button/?url=${url}`],
-  ];
-  return (
-    <div className="share-row">
-      <span>Share:</span>
-      {urls.map(([icon, href]) => (
-        <a
-          href={href}
-          key={icon}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`Share on ${icon}`}
-        >
-          <Icon name={icon} />
-        </a>
-      ))}
-    </div>
-  );
 }

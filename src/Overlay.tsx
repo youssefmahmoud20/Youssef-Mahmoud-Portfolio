@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { asset } from "./content";
 import { useApp } from "./state";
 import { Icon } from "./icons";
-import { ProjectDetail } from "./pages";
 export function Overlay() {
   const { viewer, setViewer } = useApp();
   const dialog = useRef<HTMLDialogElement>(null);
@@ -31,24 +30,14 @@ export function Overlay() {
       setZoom(false);
     }
   };
-  const close = () => {
-    setViewer(
-      viewer?.kind === "images" && viewer.returnTo
-        ? { kind: "project", work: viewer.returnTo }
-        : null,
-    );
-  };
+  const close = () => setViewer(null);
   const currentIndex =
     viewer?.kind === "images" ? Math.min(index, viewer.images.length - 1) : 0;
   return (
     <dialog
       className={`overlay ${viewer?.kind || ""}`}
       ref={dialog}
-      aria-label={
-        viewer?.kind === "project"
-          ? viewer.work.title
-          : viewer?.title || "Image viewer"
-      }
+      aria-label={viewer?.title || "Image viewer"}
       onCancel={(e) => {
         e.preventDefault();
         close();
@@ -135,28 +124,6 @@ export function Overlay() {
                 </div>
               )}
             </>
-          )}
-          {viewer.kind === "video" && (
-            <div className="video-dialog">
-              <iframe
-                title={viewer.title}
-                src="https://player.vimeo.com/video/97102654?autoplay=1"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-              />
-              <a
-                href="https://vimeo.com/97102654"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Watch on Vimeo <Icon name="link" />
-              </a>
-            </div>
-          )}
-          {viewer.kind === "project" && (
-            <div className="project-dialog">
-              <ProjectDetail work={viewer.work} embedded inOverlay />
-            </div>
           )}
         </>
       )}

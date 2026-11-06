@@ -1,17 +1,11 @@
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
-import type { Work } from "./content";
-export type Viewer =
-  | {
-      kind: "images";
-      images: string[];
-      title: string;
-      index?: number;
-      returnTo?: Work;
-    }
-  | { kind: "video"; title: string }
-  | { kind: "project"; work: Work }
-  | null;
+export type Viewer = {
+  kind: "images";
+  images: string[];
+  title: string;
+  index?: number;
+} | null;
 export type Cart = Record<number, number>;
 type State = {
   viewer: Viewer;

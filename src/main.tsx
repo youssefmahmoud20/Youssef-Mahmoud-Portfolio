@@ -4,10 +4,10 @@ import { BrowserRouter, Navigate, useLocation } from "react-router-dom";
 import { AppProvider } from "./state";
 import { SiteShell } from "./components";
 import { HomePanels } from "./sections";
-import { ProjectDetail, NotFound } from "./pages";
+import { NotFound } from "./pages";
 import { Shop, ProductDetail, CartPage, Checkout } from "./commerce";
 import { Overlay } from "./Overlay";
-import { base, navItems, products, works } from "./content";
+import { base, navItems, products } from "./content";
 import "./styles.css";
 
 function App() {
@@ -16,26 +16,16 @@ function App() {
   const local = path.startsWith(base) ? path.slice(base.length) || "/" : path;
   let page: React.ReactNode;
   let title = "Youssef Mahmoud — Developer";
-  let detail = false;
   let isHome = false;
-  const work = works.find((w) => local === `/portfolio-archive/${w.slug}`),
-    product = products.find((p) => local === `/product/${p.slug}`);
+  const product = products.find((p) => local === `/product/${p.slug}`);
   if (local === "/") {
     isHome = true;
     const hash = location.hash.slice(1);
     page = (
       <HomePanels
-        active={
-          navItems.some((item) => item.id === hash)
-            ? hash
-            : "home"
-        }
+        active={navItems.some((item) => item.id === hash) ? hash : "home"}
       />
     );
-  } else if (work) {
-    page = <ProjectDetail work={work} />;
-    title = work.title + " — Youssef Mahmoud";
-    detail = true;
   } else if (product) {
     page = <ProductDetail product={product} />;
     title = product.name + " — Youssef Mahmoud";
@@ -68,18 +58,9 @@ function App() {
     if (!isHome) window.scrollTo(0, 0);
   }, [location.pathname, location.search]);
   if (path === "/") return <Navigate to={`${base}/`} replace />;
-  if (work && new URLSearchParams(location.search).has("popup"))
-    return (
-      <>
-        <div className="standalone-project">
-          <ProjectDetail work={work} embedded />
-        </div>
-        <Overlay />
-      </>
-    );
   return (
     <>
-      <SiteShell detail={detail} checkout={local === "/checkout"}>
+      <SiteShell checkout={local === "/checkout"}>
         {isHome ? (
           page
         ) : (

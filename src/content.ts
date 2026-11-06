@@ -184,129 +184,154 @@ export const skillGroups = [
   },
 ];
 
-export const selectedProjects = [
+export const workCategories = [
+  "E-commerce",
+  "Business",
+  "News",
+  "Educational",
+  "Nonprofit",
+] as const;
+
+export type Work = {
+  title: string;
+  category: (typeof workCategories)[number];
+  url: string;
+  image: string;
+  width: number;
+  height: number;
+};
+
+export const works: Work[] = [
   {
-    title: "Smart Garden",
-    category: "WooCommerce",
-    text: "A store for hydroponic and smart gardening products, with clear shopping flows and a focus on speed.",
+    title: "Manateq",
+    category: "News",
+    url: "https://manateq.net/",
+    image: "works/manateq.webp",
+    width: 1891,
+    height: 906,
   },
   {
-    title: "Claline Pharmacy",
+    title: "Huna Canada",
+    category: "News",
+    url: "https://hunacanada.net/",
+    image: "works/huna-canada.webp",
+    width: 1893,
+    height: 912,
+  },
+  {
+    title: "Shibani",
     category: "E-commerce",
-    text: "An online pharmacy and beauty store with structured categories and product filtering.",
+    url: "https://shibani-lb.com/",
+    image: "works/shibani.webp",
+    width: 1893,
+    height: 910,
+  },
+  {
+    title: "Smart Garden",
+    category: "E-commerce",
+    url: "https://smartgarden.com.lb/",
+    image: "works/smart-garden.webp",
+    width: 1897,
+    height: 910,
+  },
+  {
+    title: "Nonagon",
+    category: "Business",
+    url: "https://nonagon-studio.com/",
+    image: "works/nonagon.webp",
+    width: 1893,
+    height: 904,
+  },
+  {
+    title: "Claline",
+    category: "E-commerce",
+    url: "https://claline.com/",
+    image: "works/claline.webp",
+    width: 1897,
+    height: 912,
+  },
+  {
+    title: "ANPE",
+    category: "Nonprofit",
+    url: "https://anpelb.org/",
+    image: "works/anpe.webp",
+    width: 1893,
+    height: 908,
+  },
+  {
+    title: "Perla Home",
+    category: "E-commerce",
+    url: "https://perlahomelebanon.com/",
+    image: "works/perla-home.webp",
+    width: 1895,
+    height: 908,
+  },
+  {
+    title: "Fun Square",
+    category: "Business",
+    url: "https://funsquareleb.com/",
+    image: "works/fun-square.webp",
+    width: 1895,
+    height: 904,
+  },
+  {
+    title: "EAU",
+    category: "Educational",
+    url: "https://eaugroup.co/",
+    image: "works/eau.webp",
+    width: 1897,
+    height: 908,
   },
   {
     title: "Calia Group",
     category: "E-commerce",
-    text: "A clothing website with dynamic product showcases and clear store navigation.",
+    url: "https://shop.caliagroup.com/",
+    image: "works/calia-group.webp",
+    width: 1895,
+    height: 910,
   },
   {
-    title: "Fun Square Leb",
-    category: "Booking website",
-    text: "An entertainment venue website with an events showcase and integrated booking and contact flows.",
+    title: "Baladi",
+    category: "Business",
+    url: "https://baladirestaurant.com/",
+    image: "works/baladi.webp",
+    width: 1868,
+    height: 904,
   },
   {
-    title: "Restaurant Le Figuier & Baladi Restaurant",
-    category: "Restaurant websites",
-    text: "Restaurant websites with menus, galleries, reservations, ordering, and location information.",
+    title: "Le Figuier",
+    category: "Business",
+    url: "https://restaurant-lefiguier.ch/",
+    image: "works/le-figuier.webp",
+    width: 1899,
+    height: 912,
   },
   {
-    title: "LiftFit Gym",
-    category: "Framer",
-    text: "A mobile-first landing page with smooth animations and reusable components.",
+    title: "Ayniya",
+    category: "E-commerce",
+    url: "https://ayniya.com/",
+    image: "works/ayniya.webp",
+    width: 1895,
+    height: 902,
+  },
+  {
+    title: "AUA",
+    category: "Business",
+    url: "https://aua.ai/",
+    image: "works/aua.webp",
+    width: 1897,
+    height: 904,
+  },
+  {
+    title: "Arvada",
+    category: "Business",
+    url: "https://arvada-lb.com/",
+    image: "works/arvada.webp",
+    width: 1897,
+    height: 906,
   },
 ];
 
-export type Work = {
-  title: string;
-  slug: string;
-  type: string;
-  image: string;
-  width: number;
-  height: number;
-  gallery: string[];
-  thumbnailGallery?: string[];
-};
-const supplements = (nums: number[]) => nums.map((n) => `work-single${n}.jpg`);
-export const works: Work[] = [
-  {
-    title: "Weather Mobile App",
-    slug: "weather-mobile-app",
-    type: "Gallery",
-    image: "work1-1.jpg",
-    width: 1200,
-    height: 1200,
-    gallery: supplements([1, 2, 3, 4]),
-  },
-  {
-    title: "OYYI Furniture App",
-    slug: "oyyi-furniture-app",
-    type: "Link",
-    image: "work2-1.jpg",
-    width: 1200,
-    height: 900,
-    gallery: supplements([1, 2, 3, 4]),
-  },
-  {
-    title: "Sushi Parlour App",
-    slug: "sushi-parlour-app",
-    type: "Gallery",
-    image: "work3-1.jpg",
-    width: 1200,
-    height: 1600,
-    gallery: supplements([6, 5]),
-    thumbnailGallery: supplements([5, 6]),
-  },
-  {
-    title: "Unicode Web App",
-    slug: "unicode-web-app",
-    type: "Video",
-    image: "work4-1.jpg",
-    width: 1200,
-    height: 800,
-    gallery: supplements([6, 5]),
-  },
-  {
-    title: "SOUNDS Web App",
-    slug: "sounds-web-app",
-    type: "Content",
-    image: "work8.jpg",
-    width: 1200,
-    height: 857,
-    gallery: supplements([6, 5]),
-  },
-  {
-    title: "Future Web App",
-    slug: "future-web-app",
-    type: "Image",
-    image: "work6.jpg",
-    width: 1200,
-    height: 1029,
-    gallery: supplements([6, 5]),
-  },
-  {
-    title: "Furniture Mobile App",
-    slug: "furniture-mobile-app",
-    type: "Content",
-    image: "work7.jpg",
-    width: 1200,
-    height: 1560,
-    gallery: supplements([1, 2, 3, 4]),
-  },
-  {
-    title: "ChatApp Mobile",
-    slug: "chatapp-mobile",
-    type: "Image",
-    image: "work5-1.jpg",
-    width: 1200,
-    height: 727,
-    gallery: supplements([1, 2, 3, 4]),
-  },
-];
-export const workUrl = (work: Work) =>
-  `${base}/portfolio-archive/${work.slug}/`;
-export const projectDescription =
-  "So striking at of to welcomed resolved. Northward by described up household therefore attention. Excellence decisively nay man yet impression for contrasted remarkably.";
 export type Product = {
   id: number;
   slug: string;

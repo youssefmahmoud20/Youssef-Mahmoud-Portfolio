@@ -1056,11 +1056,15 @@ small {
   font-size: 24px;
 }
 .image-link:hover .image-overlay,
-.image-link:focus-visible .image-overlay {
+.image-link:focus-visible .image-overlay,
+.work-card > a:focus-visible .image-overlay {
   opacity: 1;
 }
 .work-card {
   text-align: center;
+}
+.work-card > a {
+  display: block;
 }
 .work-card h3 {
   font-size: 17px;
