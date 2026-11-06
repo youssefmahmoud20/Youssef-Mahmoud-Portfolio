@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -12,6 +13,7 @@ import {
 } from "./content";
 import { Icon } from "./icons";
 import { useApp } from "./state";
+import cvDownloadUrl from "./assets/youssef-mahmoud-cv.pdf?url&inline";
 
 export function Heading({
   children,
@@ -184,7 +186,7 @@ export function Profile() {
         </div>
       </div>
       <div className="profile-actions">
-        <a href={asset("cv.pdf")} download="CV - Youssef Mahmoud.pdf">
+        <a href={cvDownloadUrl} download="CV - Youssef Mahmoud.pdf">
           Download CV <Icon name="download" />
         </a>
         <Link to={home("contact")}>
