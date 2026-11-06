@@ -19,8 +19,6 @@ type State = {
   cart: Cart;
   setCart: (c: Cart) => void;
   addToCart: (id: number, qty?: number) => void;
-  theme: string;
-  toggleTheme: () => void;
 };
 const Context = createContext<State>(null!);
 function stored<T>(key: string, fallback: T): T {
@@ -33,9 +31,6 @@ function stored<T>(key: string, fallback: T): T {
 export function AppProvider({ children }: { children: ReactNode }) {
   const [viewer, setViewer] = useState<Viewer>(null);
   const [cart, updateCart] = useState<Cart>(() => stored("ryancv.cart", {}));
-  const [theme, setTheme] = useState<string>(() =>
-    stored("ryancv.theme", "dark"),
-  );
   const setCart = (c: Cart) => {
     updateCart(c);
     localStorage.setItem("ryancv.cart", JSON.stringify(c));
@@ -47,12 +42,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
       return next;
     });
   };
-  const toggleTheme = () =>
-    setTheme((t) => {
-      const next = t === "dark" ? "light" : "dark";
-      localStorage.setItem("ryancv.theme", JSON.stringify(next));
-      return next;
-    });
   return (
     <Context
       value={{
@@ -61,11 +50,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
         cart,
         setCart,
         addToCart,
-        theme,
-        toggleTheme,
       }}
     >
-      <div data-theme={theme}>{children}</div>
+      <div data-theme="dark">{children}</div>
     </Context>
   );
 }

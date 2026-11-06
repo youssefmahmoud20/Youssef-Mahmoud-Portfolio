@@ -5,7 +5,6 @@ export const navItems = [
   { id: "home", label: "About", icon: "user" },
   { id: "resume", label: "Resume", icon: "list" },
   { id: "works", label: "Works", icon: "eye" },
-  { id: "blog", label: "Blog", icon: "newspaper" },
   { id: "contact", label: "Contact", icon: "plane" },
   { id: "products", label: "Products", icon: "desktop" },
 ];
@@ -242,55 +241,8 @@ export const works: Work[] = [
 ];
 export const workUrl = (work: Work) =>
   `${base}/portfolio-archive/${work.slug}/`;
-export const excerpt =
-  "So striking at of to welcomed resolved. Northward by described up household therefore attention. Excellence decisively nay man yet impression for contrasted remarkably…";
-export const posts = [
-  {
-    title: "By spite about do of allow",
-    slug: "by-spite-about-do-of-allow",
-    categories: ["Code"],
-    image: "blog2.jpg",
-    comments: [
-      { id: 6, name: "John Doe", time: "8:16 pm" },
-      { id: 8, name: "Ryan Adlard", time: "8:18 pm", parent: 6 },
-      { id: 7, name: "James Rodri", time: "8:16 pm" },
-    ],
-  },
-  {
-    title: "A Song And Dance Act",
-    slug: "a-song-and-dance-act",
-    categories: ["Design"],
-    image: "bg.jpg",
-    comments: [
-      { id: 4, name: "John Doe", time: "8:19 pm" },
-      { id: 5, name: "James Rodri", time: "8:19 pm" },
-    ],
-  },
-  {
-    title: "Music Player Design",
-    slug: "music-player-design",
-    categories: ["Music"],
-    image: "blog3.jpg",
-    comments: [{ id: 3, name: "James Rodri", time: "8:20 pm" }],
-  },
-  {
-    title: "Designing the perfect",
-    slug: "designing-the-perfect",
-    categories: ["Design", "Music"],
-    image: "blog1.jpg",
-    comments: [],
-  },
-  {
-    title: "Creativity Is More Than",
-    slug: "creativity-is-more-than",
-    categories: ["Code", "Design"],
-    image: "blog1.jpg",
-    comments: [{ id: 2, name: "Ryan Adlard", time: "8:21 pm" }],
-  },
-];
-export type Post = (typeof posts)[number];
-export const postUrl = (post: Post) => `${base}/2020/04/28/${post.slug}/`;
-export const tags = ["code", "html", "plugin", "wordpress"];
+export const projectDescription =
+  "So striking at of to welcomed resolved. Northward by described up household therefore attention. Excellence decisively nay man yet impression for contrasted remarkably.";
 export type Product = {
   id: number;
   slug: string;
@@ -359,74 +311,3 @@ export const money = (n: number) =>
   new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(
     n,
   );
-export const demoSlugs = [
-  "product-designer",
-  "product-manager",
-  "ml-engineer",
-  "project-manager",
-  "game-developer",
-  "dataops",
-  "app-developer",
-  "ui-designer",
-  "seo",
-  "cybersecurity",
-  "default",
-  "digital",
-  "system",
-  "developer",
-  "designer",
-  "writer",
-  "business",
-  "marketing",
-  "streamer",
-  "crypto",
-  "lawyer",
-  "dark",
-];
-export const relatedSlugs = [
-  "josie",
-  "courtney",
-  "luique",
-  "trueman",
-  "ober",
-  "arter",
-  "myour",
-  "cvio",
-  "glitche",
-];
-export const allThemeSlugs = [
-  "cleandy",
-  "mivon",
-  "josie",
-  "metrol",
-  "lumex",
-  "moork",
-  "okai",
-  "pixy",
-  "ruizarch",
-  "ashley",
-  "itsulu",
-  "courtney",
-  "lettery",
-  "onovo",
-  "lesya",
-  "samantha",
-  "builty",
-  "luique",
-  "starbelly",
-  "orabel",
-  "trueman",
-  "kaffen",
-  "kinsley",
-  "ober",
-  "minterio",
-  "larson",
-  "tastyc",
-  "oblo",
-  "mireya",
-  "quarty",
-  "arter",
-  "myour",
-  "cvio",
-  "glitche",
-];

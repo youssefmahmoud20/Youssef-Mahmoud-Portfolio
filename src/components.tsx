@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import type { ReactNode, FormEvent } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import type { ReactNode } from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   asset,
   base,
@@ -8,12 +8,6 @@ import {
   roles,
   socials,
   navItems,
-  posts,
-  postUrl,
-  works,
-  demoSlugs,
-  relatedSlugs,
-  allThemeSlugs,
 } from "./content";
 import { Icon } from "./icons";
 import { useApp } from "./state";
@@ -193,122 +187,6 @@ export function Profile() {
     </section>
   );
 }
-function Sidebar({ close }: { close: () => void }) {
-  const navigate = useNavigate();
-  const panelRef = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const previous = document.activeElement as HTMLElement | null;
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    panelRef.current?.querySelector<HTMLInputElement>("input")?.focus();
-    return () => {
-      document.body.style.overflow = overflow;
-      previous?.focus();
-    };
-  }, []);
-  const search = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const s = String(new FormData(e.currentTarget).get("s") || "").trim();
-    if (s) {
-      navigate(`${base}/?s=${encodeURIComponent(s)}`);
-      close();
-    }
-  };
-  return (
-    <>
-      <button
-        className="sidebar-backdrop"
-        onClick={close}
-        aria-label="Close sidebar"
-        tabIndex={-1}
-      />
-      <aside
-        ref={panelRef}
-        className="sidebar"
-        aria-label="Site sidebar"
-        role="dialog"
-        aria-modal="true"
-        onKeyDown={(e) => {
-          if (e.key !== "Tab") return;
-          const focusable = [
-            ...e.currentTarget.querySelectorAll<HTMLElement>("a,button,input"),
-          ];
-          const first = focusable[0],
-            last = focusable[focusable.length - 1];
-          if (e.shiftKey && document.activeElement === first) {
-            e.preventDefault();
-            last.focus();
-          } else if (!e.shiftKey && document.activeElement === last) {
-            e.preventDefault();
-            first.focus();
-          }
-        }}
-      >
-        <button
-          className="sidebar-close icon-button"
-          onClick={close}
-          aria-label="Close sidebar"
-        >
-          <Icon name="close" />
-        </button>
-        <form className="search-form" onSubmit={search}>
-          <input name="s" placeholder="Search …" aria-label="Search" required />
-          <button aria-label="Search">
-            <Icon name="search" />
-          </button>
-        </form>
-        <h3>Recent Posts</h3>
-        <ul>
-          {posts.slice(0, 5).map((p) => (
-            <li key={p.slug}>
-              <Link to={postUrl(p)} onClick={close}>
-                {p.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <h3>Recent Comments</h3>
-        <ul>
-          {[
-            ["Ryan Adlard", posts[4], 2],
-            ["James Rodri", posts[2], 3],
-            ["James Rodri", posts[1], 5],
-            ["John Doe", posts[1], 4],
-            ["Ryan Adlard", posts[0], 8],
-          ].map(([author, p, id]) => (
-            <li key={String(id)}>
-              {String(author)} on{" "}
-              <Link
-                to={`${postUrl(p as (typeof posts)[number])}#comment-${id}`}
-                onClick={close}
-              >
-                {(p as (typeof posts)[number]).title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <h3>Archives</h3>
-        <ul>
-          <li>
-            <Link to={`${base}/2020/04/`} onClick={close}>
-              April 2020
-            </Link>
-          </li>
-        </ul>
-        <h3>Categories</h3>
-        <ul>
-          {["Code", "Design", "Music"].map((c) => (
-            <li key={c}>
-              <Link to={`${base}/category/${c.toLowerCase()}/`} onClick={close}>
-                {c}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </aside>
-    </>
-  );
-}
 export function SiteShell({
   children,
   detail = false,
@@ -318,32 +196,13 @@ export function SiteShell({
   detail?: boolean;
   checkout?: boolean;
 }) {
-  const [sidebar, setSidebar] = useState(false);
-  const { theme, toggleTheme, cart } = useApp();
+  const { cart } = useApp();
   const location = useLocation();
-  const active =
-    location.pathname === `${base}/`
-      ? location.hash.slice(1) || "home"
-      : location.pathname.includes("portfolio")
-        ? "works"
-        : /product|shop|cart|checkout/.test(location.pathname)
-          ? "products"
-          : "blog";
-  useEffect(() => {
-    setSidebar(false);
-  }, [location.pathname, location.search]);
-  useEffect(() => {
-    document.body.classList.toggle("is-light", theme === "light");
-    return () => document.body.classList.remove("is-light");
-  }, [theme]);
-  useEffect(() => {
-    if (!sidebar) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSidebar(false);
-    };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [sidebar]);
+  const active = location.pathname === base || location.pathname === base + "/"
+    ? navItems.find((item) => "#" + item.id === location.hash)?.id ?? "home"
+    : location.pathname.includes("/portfolio-archive/") ? "works"
+    : /\/(product|product-category|shop|cart|checkout)(\/|$)/.test(location.pathname) ? "products"
+    : undefined;
   return (
     <>
       <a className="skip-link" href="#main-content">
@@ -368,22 +227,6 @@ export function SiteShell({
               <Typewriter />
             </div>
           </div>
-          <div className="nav-tools">
-            <button
-              className="icon-button"
-              aria-label="Open sidebar"
-              onClick={() => setSidebar(true)}
-            >
-              <Icon name="menu" />
-            </button>
-            <button
-              className="icon-button"
-              onClick={toggleTheme}
-              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
-            >
-              <Icon name={theme === "dark" ? "sun" : "moon"} />
-            </button>
-          </div>
           <nav aria-label="Main navigation">
             {navItems.map((n) => (
               <Link
@@ -404,10 +247,7 @@ export function SiteShell({
         </main>
       </div>
       <footer className="site-footer">
-        © 2026 RyanCV is Proudly Powered by{" "}
-        <a href="https://bslthemes.com/" target="_blank" rel="noreferrer">
-          bslthemes
-        </a>
+        © 2026 Youssef Mahmoud
         {Object.values(cart).reduce((s, n) => s + n, 0) > 0 && (
           <Link
             className="footer-cart"
@@ -419,8 +259,6 @@ export function SiteShell({
           </Link>
         )}
       </footer>
-      {sidebar && <Sidebar close={() => setSidebar(false)} />}
-      <VendorToolbar />
       <PointerHalo />
     </>
   );
@@ -469,124 +307,5 @@ export function ShareLinks({ title, path }: { title: string; path?: string }) {
         </a>
       ))}
     </div>
-  );
-}
-
-export function VendorToolbar() {
-  const [hidden, setHidden] = useState(false),
-    [help, setHelp] = useState(false),
-    [open, setOpen] = useState(false),
-    [tab, setTab] = useState("DEMO");
-  const utm =
-    "?utm_source=sticky_panel&utm_medium=referral&utm_campaign=sticky_panel";
-  if (hidden) return null;
-  return (
-    <>
-      <div className="vendor-toolbar">
-        <button
-          aria-label="Remove Panel"
-          title="Remove Panel"
-          onClick={() => setHidden(true)}
-        >
-          <Icon name="close" />
-        </button>
-        <button aria-label="Help" title="Help" onClick={() => setHelp(!help)}>
-          <Icon name="help" />
-        </button>
-        <a
-          title="Buy Theme"
-          aria-label="Buy Theme"
-          href={
-            "https://bslthemes.com/products/ryancv-vcard-resume-wordpress-theme/" +
-            utm
-          }
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Icon name="cart" />
-        </a>
-        <button title="Demos" aria-label="Demos" onClick={() => setOpen(true)}>
-          <Icon name="grid" />
-        </button>
-      </div>
-      {help && (
-        <div className="vendor-help">
-          <a
-            href="https://bslthemes.gitbook.io/ryancv-wp-doc/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Documentation
-          </a>
-          <a
-            href={"https://bslthemes.com/support" + utm}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Get Support
-          </a>
-          <a
-            href="https://bslthemes.gitbook.io/ryancv-wp-doc/extras/changelog"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Changelog
-          </a>
-        </div>
-      )}
-      {open && (
-        <>
-          <button
-            className="vendor-backdrop"
-            aria-label="Close Panel"
-            onClick={() => setOpen(false)}
-          />
-          <aside className="vendor-drawer" aria-label="Theme demos">
-            <button
-              className="icon-button"
-              aria-label="Close Panel"
-              onClick={() => setOpen(false)}
-            >
-              <Icon name="close" />
-            </button>
-            <div className="vendor-tabs">
-              {["DEMO", "RELATED THEMES", "ALL THEMES"].map((t) => (
-                <button
-                  className={t === tab ? "active" : ""}
-                  key={t}
-                  onClick={() => setTab(t)}
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
-            <div className="vendor-links">
-              {(tab === "DEMO"
-                ? demoSlugs
-                : tab === "RELATED THEMES"
-                  ? relatedSlugs
-                  : allThemeSlugs
-              ).map((slug, i) => (
-                <a
-                  href={
-                    tab === "DEMO"
-                      ? `https://ryancv.bslthemes.com/${slug}/${utm}`
-                      : `https://${slug}.bslthemes.com/${tab === "RELATED THEMES" ? utm : ""}`
-                  }
-                  target="_blank"
-                  rel="noreferrer"
-                  key={slug}
-                >
-                  <div className="theme-miniature">
-                    <img src={asset(works[i % works.length].image)} alt="" />
-                  </div>
-                  {slug.replaceAll("-", " ")}
-                </a>
-              ))}
-            </div>
-          </aside>
-        </>
-      )}
-    </>
   );
 }

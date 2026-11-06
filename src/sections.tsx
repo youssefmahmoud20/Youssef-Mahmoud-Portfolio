@@ -18,12 +18,9 @@ import {
   languages,
   works,
   workUrl,
-  posts,
-  postUrl,
-  excerpt,
   products,
 } from "./content";
-import type { Work, Post } from "./content";
+import type { Work } from "./content";
 import { Heading, Facts, IconTitle, Action } from "./components";
 import { Icon } from "./icons";
 import { useApp } from "./state";
@@ -474,76 +471,6 @@ function WorkCard({ work: w }: { work: Work }) {
     </article>
   );
 }
-export function PostCard({ post }: { post: Post }) {
-  return (
-    <article className="post-card">
-      <Link className="image-link" to={postUrl(post)}>
-        <img
-          src={asset(post.image)}
-          alt={post.title}
-          width={post.image === "bg.jpg" ? 1000 : 800}
-          height={post.image === "bg.jpg" ? 680 : 375}
-          loading="lazy"
-        />
-      </Link>
-      <Link className="post-date" to={`${base}/2020/04/`}>
-        April 28, 2020
-      </Link>
-      <h3>
-        <Link to={postUrl(post)}>{post.title}</Link>
-      </h3>
-      <p>
-        {excerpt}
-        {post === posts[4]
-          ? " So striking at of to welcomed resolved. Northward by described up household therefore attention."
-          : ""}
-      </p>
-    </article>
-  );
-}
-export function Blog() {
-  const [filter, setFilter] = useState("All"),
-    [limit, setLimit] = useState(4);
-  const filtered = posts.filter(
-    (p) => filter === "All" || p.categories.includes(filter),
-  );
-  return (
-    <section>
-      <Heading
-        aside={
-          <Filters
-            options={["All", "Music", "Design", "Code"]}
-            value={filter}
-            onChange={(v) => {
-              setFilter(v);
-              setLimit(4);
-            }}
-          />
-        }
-      >
-        Blog
-      </Heading>
-      <div className="grid-content">
-        <Masonry>
-          {filtered.slice(0, limit).map((p) => (
-            <PostCard post={p} key={p.slug} />
-          ))}
-        </Masonry>
-        {filtered.length > limit && (
-          <div className="center">
-            <button
-              className="action"
-              onClick={() => setLimit(filtered.length)}
-            >
-              Load More
-              <Icon name="right" />
-            </button>
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}
 export function Contact() {
   return (
     <>
@@ -673,7 +600,6 @@ export function HomePanels({ active }: { active: string }) {
     ["home", About],
     ["resume", Resume],
     ["works", Works],
-    ["blog", Blog],
     ["contact", Contact],
     ["products", Products],
   ] as const;

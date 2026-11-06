@@ -198,30 +198,6 @@
     "bytes": 144455
   },
   {
-    "file": "blog1.jpg",
-    "source": "https://ryancv.bslthemes.com/developer/wp-content/uploads/sites/3/2020/04/blog1.jpg",
-    "ok": true,
-    "bytes": 112566
-  },
-  {
-    "file": "blog2.jpg",
-    "source": "https://ryancv.bslthemes.com/developer/wp-content/uploads/sites/3/2020/04/blog2.jpg",
-    "ok": true,
-    "bytes": 96761
-  },
-  {
-    "file": "blog3.jpg",
-    "source": "https://ryancv.bslthemes.com/developer/wp-content/uploads/sites/3/2020/04/blog3.jpg",
-    "ok": true,
-    "bytes": 84857
-  },
-  {
-    "file": "bg.jpg",
-    "source": "https://ryancv.bslthemes.com/developer/wp-content/uploads/sites/3/2020/04/bg.jpg",
-    "ok": true,
-    "bytes": 284845
-  },
-  {
     "file": "cv.pdf",
     "source": "https://ryancv.bslthemes.com/default/wp-content/uploads/sites/29/2026/07/cv-example-file.pdf",
     "ok": true,
